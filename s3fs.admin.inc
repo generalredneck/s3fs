@@ -73,7 +73,8 @@ function s3fs_settings() {
     '#type'          => 'textfield',
     '#title'         => t('Default Cache Location'),
     '#default_value' => _s3fs_get_setting('awssdk2_default_cache_config'),
-    '#description'   => t('The default cache location for your EC2 Instance Profile Credentials.'),
+    '#description'   => t('The default location to which your EC2 Instance Profile Credentials should be cached.
+      This must be a path to a folder in which the webserver can read and write.'),
     '#states'        => array(
       'visible' => array(
         ':input[id=edit-s3fs-use-instance-profile]' => array('checked' => TRUE),
