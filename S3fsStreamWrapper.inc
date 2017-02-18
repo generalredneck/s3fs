@@ -348,7 +348,7 @@ class S3fsStreamWrapper implements DrupalStreamWrapperInterface {
           // their S3 bucket's s3fs_public_folder.
           return "{$GLOBALS['base_url']}/s3fs-css/" . drupal_encode_path($s3_key);
         }
-        else if (substr($s3_key, -3) == '.js') {
+        elseif (substr($s3_key, -3) == '.js') {
           // Send requests for public JS files to /s3fs-js/path/to/file.js.
           // Like with CSS, the user must set up that path as a proxy.
           return "{$GLOBALS['base_url']}/s3fs-js/" . drupal_encode_path($s3_key);
@@ -621,7 +621,7 @@ class S3fsStreamWrapper implements DrupalStreamWrapperInterface {
       if ($mode == 'r') {
         $this->_open_read_stream($this->params, $errors);
       }
-      else if ($mode == 'a') {
+      elseif ($mode == 'a') {
         $this->_open_append_stream($this->params, $errors);
       }
       else {
@@ -1264,7 +1264,7 @@ class S3fsStreamWrapper implements DrupalStreamWrapperInterface {
     if (strpos($uri, 'public:///') === 0) {
       $uri = preg_replace('^public://[/]+^', 'public://', $uri);
     }
-    else if (strpos($uri, 'private:///') === 0) {
+    elseif (strpos($uri, 'private:///') === 0) {
       $uri = preg_replace('^private://[/]+^', 'private://', $uri);
     }
 
@@ -1320,7 +1320,7 @@ class S3fsStreamWrapper implements DrupalStreamWrapperInterface {
     if (strpos($metadata['uri'], 'public:///') === 0) {
       $metadata['uri'] = preg_replace('^public://[/]+^', 'public://', $metadata['uri']);
     }
-    else if (strpos($metadata['uri'], 'private:///') === 0) {
+    elseif (strpos($metadata['uri'], 'private:///') === 0) {
       $metadata['uri'] = preg_replace('^private://[/]+^', 'private://', $metadata['uri']);
     }
 
@@ -1421,7 +1421,7 @@ class S3fsStreamWrapper implements DrupalStreamWrapperInterface {
       $params['Key'] = "$public_folder/{$params['Key']}";
     }
     // private:// file are all placed in the s3fs_private_folder.
-    else if (file_uri_scheme($uri) == 'private') {
+    elseif (file_uri_scheme($uri) == 'private') {
       $params['Key'] = "$private_folder/{$params['Key']}";
     }
 
@@ -1643,7 +1643,7 @@ if ($library['loaded']) {
       if ($whence == SEEK_SET) {
         $byte = $offset;
       }
-      else if ($whence == SEEK_CUR) {
+      elseif ($whence == SEEK_CUR) {
         $byte = $offset + $this->ftell();
       }
       else {

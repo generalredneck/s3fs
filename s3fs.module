@@ -155,7 +155,7 @@ function s3fs_help($path, $arg) {
     );
     return "<p>$msg</p>";
   }
-  else if ($path == $actions) {
+  elseif ($path == $actions) {
     $msg = t('These are the actions that you can perform upon S3 File System.');
     $msg .= '<br>' . t('To change your settings, visit the !link.', array('!link' => l(t('settings page'), $settings)));
     return "<p>$msg</p>";
@@ -461,7 +461,7 @@ function _s3fs_refresh_cache($config) {
       $key = str_replace("$public_folder_name/", '', $key);
       $uri = "public://$key";
     }
-    else if (strpos($key, "$private_folder_name/") === 0) {
+    elseif (strpos($key, "$private_folder_name/") === 0) {
       $key = str_replace("$private_folder_name/", '', $key);
       $uri = "private://$key";
     }
@@ -651,7 +651,7 @@ function _s3fs_convert_metadata($uri, $s3_metadata) {
     if (isset($s3_metadata['ContentLength'])) {
       $metadata['filesize'] = $s3_metadata['ContentLength'];
     }
-    else if (isset($s3_metadata['Size'])) {
+    elseif (isset($s3_metadata['Size'])) {
       $metadata['filesize'] = $s3_metadata['Size'];
     }
 
@@ -719,19 +719,19 @@ function _s3fs_get_amazons3_client($config) {
         t('Unable to load the AWS SDK. Please ensure that the awssdk2 library is installed correctly.')
       );
     }
-    else if (!class_exists('Aws\S3\S3Client')) {
+    elseif (!class_exists('Aws\S3\S3Client')) {
       throw new S3fsException(
         t('Cannot load Aws\S3\S3Client class. Please ensure that the awssdk2 library is installed correctly.')
       );
     }
-    else if (!$use_instance_profile && (!$secret_key || !$access_key)) {
+    elseif (!$use_instance_profile && (!$secret_key || !$access_key)) {
       throw new S3fsException(t("Your AWS credentials have not been properly configured.
         Please set them on the S3 File System !settings_page or
         set \$conf['awssdk2_access_key'] and \$conf['awssdk2_secret_key'] in settings.php.",
         array('!settings_page' => l(t('settings page'), 'admin/config/media/s3fs/settings')))
       );
     }
-    else if ($use_instance_profile && (
+    elseif ($use_instance_profile && (
         empty($default_cache_config) || !(is_writable($default_cache_config) && is_readable($default_cache_config)))) {
       throw new s3fsException(t("Your AWS credentials have not been properly configured.
         You are attempting to use instance profile credentials but you have not set a valid default cache location.
@@ -786,7 +786,7 @@ function _s3fs_get_amazons3_client($config) {
  *   An associative array of all the s3fs_* config settings, with the "s3fs_"
  *   prefix removed from their names.
  */
-function _s3fs_get_config($reset=FALSE) {
+function _s3fs_get_config($reset = FALSE) {
   $config = &drupal_static('_s3fs_get_config');
   if ($config === NULL || $reset) {
     // The global $conf array contains all the variables, including overrides
@@ -821,7 +821,7 @@ function _s3fs_get_config($reset=FALSE) {
  * @param string $setting
  *   The short name of the setting. e.g. the "s3fs_use_cname" variable's short name is "use_cname".
  */
-function _s3fs_get_setting($setting, $default='') {
+function _s3fs_get_setting($setting, $default = '') {
   global $conf;
   // $config is just the s3fs_* variables with that prefix removed.
   $config = _s3fs_get_config();
@@ -896,7 +896,7 @@ function _s3fs_copy_file_system_to_s3($scheme) {
   if ($scheme == 'public') {
     $source_folder = realpath(variable_get('file_public_path', conf_path() . '/files'));
   }
-  else if ($scheme == 'private') {
+  elseif ($scheme == 'private') {
     $source_folder = variable_get('file_private_path', '');
     $source_folder_real = realpath($source_folder);
     if (empty($source_folder) || empty($source_folder_real)) {
