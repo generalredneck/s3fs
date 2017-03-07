@@ -998,15 +998,13 @@ class S3fsStreamWrapper implements DrupalStreamWrapperInterface {
     $bare_uri = rtrim($uri, '/');
     $slash_uri = $bare_uri . '/';
 
-    // Check if the folder is empty.
-    $files = db_select('s3fs_file', 's')
+    // If the folder is empty, it's eligible for deletion.
+    $file_count = db_select('s3fs_file', 's')
       ->fields('s')
       ->condition('uri', db_like($slash_uri) . '%', 'LIKE')
       ->execute()
-      ->fetchAll(PDO::FETCH_ASSOC);
-
-    // If the folder is empty, it's eligible for deletion.
-    if (empty($files)) {
+      ->rowCount();
+    if ($file_count === 0) {
       $result = $this->_delete_cache($bare_uri);
       clearstatcache(TRUE, $bare_uri);
 
