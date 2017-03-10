@@ -354,6 +354,18 @@ function s3fs_update_7203() {
   variable_set('s3fs_awssdk2_use_instance_profile', $old_var);
 }
 
+/**
+ * Fix the bug in the previous update hook.
+ */
+function s3fs_update_7204() {
+  # The previous hook blindly set the s3fs_awssdk2_use_instance_profile variable to 'unset' if
+  # the previous version of the variable wasn't set. This is disastrous, as 'unset' equates to boolean true.
+  $var = variable_get('s3fs_awssdk2_use_instance_profile');
+  if ($var == 'unset') {
+    variable_del('s3fs_awssdk2_use_instance_profile');
+  }
+}
+
 
 /******************************************************************************
  *                            INTERNAL FUNCTONS
