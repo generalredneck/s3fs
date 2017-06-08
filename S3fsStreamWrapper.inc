@@ -819,13 +819,7 @@ class S3fsStreamWrapper implements DrupalStreamWrapperInterface {
   public function stream_stat() {
     $this->_debug("stream_stat() called for {$this->uri}.");
 
-    $stat = fstat($this->body->getStream());
-    // Add the size of the underlying stream if it is known.
-    if ($this->access_mode == 'r' && $this->body->getSize()) {
-      $stat[7] = $stat['size'] = $this->body->getSize();
-    }
-
-    return $stat;
+    return $this->_stat($this->uri);
   }
 
   /**
