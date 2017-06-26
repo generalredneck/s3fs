@@ -495,9 +495,8 @@ function _s3fs_refresh_cache($config) {
   _s3fs_write_metadata($file_metadata_list, $folders);
 
   // Write folders.
-  $query = db_select('s3fs_folder_temp');
-  $query->fields('s3fs_folder_temp')
-    ->groupBy('uri');
+  $query = db_select('s3fs_folder_temp')->distinct();
+  $query->fields('s3fs_folder_temp');
   $folder_counter = 0;
 
   $result = $query->execute();
