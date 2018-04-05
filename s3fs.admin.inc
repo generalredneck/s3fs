@@ -57,7 +57,7 @@ function s3fs_settings() {
   );
 
   $form['aws_credentials']['s3fs_awssdk2_secret_key'] = array(
-    '#type'          => 'textfield',
+    '#type'          => 'password',
     '#title'         => t('Amazon Web Services Secret Key'),
     '#default_value' => _s3fs_get_setting('awssdk2_secret_key'),
   );
@@ -76,7 +76,7 @@ function s3fs_settings() {
     '#type'          => 'textfield',
     '#title'         => t('Default Cache Location'),
     '#default_value' => _s3fs_get_setting('awssdk2_default_cache_config'),
-    '#description'   => t('The default location to which your EC2 Instance Profile Credentials should be cached.
+    '#description'   => t('The default folder in which your EC2 Instance Profile Credentials should be cached.
       This must be a path to a folder in which the webserver can read and write.'),
     '#states'        => array(
       'visible' => array(
