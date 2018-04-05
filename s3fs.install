@@ -368,6 +368,16 @@ function s3fs_update_7204() {
   }
 }
 
+/**
+* Adds the option to enable/disable querying of Versioned files
+* during the _s3fs_reset_media_cache() Action
+*/
+function s3fs_update_7205() {
+  # Sets the boolean flag of use_versioning to the default value of TRUE
+  # This will ensure that Versioning is set to default on module installation and enabling
+  variable_set('s3fs_use_versioning', TRUE);
+}
+
 
 /******************************************************************************
  *                            INTERNAL FUNCTONS

@@ -188,6 +188,16 @@ function s3fs_settings() {
     ),
   );
 
+  $form['advanced']['s3fs_use_versioning'] = array(
+    '#type'             => 'checkbox',
+    '#title'            =>  t('Use Bucket Versioning'),
+    '#default_value'    => _s3fs_get_setting('use_versioning'),
+    '#description'      => t(
+        'If your Bucket has Versioning enabled and you would like to store the version metadata 
+        in the s3fs_file table'
+    ),
+  );
+
   $form['advanced']['s3fs_cache_control_header'] = array(
     '#type'          => 'textfield',
     '#title'         => t('S3 Object Cache-Control Header'),
