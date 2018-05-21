@@ -767,9 +767,14 @@ class S3fsStreamWrapper implements DrupalStreamWrapperInterface {
     $upload_params = $this->params;
     $upload_params['Body'] = $this->body;
     $upload_params['ContentType'] = S3fsStreamWrapper::getMimeType($this->uri);
-    if (file_uri_scheme($this->uri) != 'private') {
-      // All non-private files uploaded to S3 must be set to public-read, or users' browsers
-      // will get PermissionDenied errors, and torrent URLs won't work.
+    // All non-private files uploaded to S3 must be set to public-read, or users' browsers
+    // will get PermissionDenied errors, and torrent URLs won't work. The one exception to
+    // this is when all content is being routed through an edge service and access via S3
+    // should be blocked.
+    if (!empty($this->config['use_cname']) && !empty($this->config['domain']) && !empty($this->config['domain_s3_private'])) {
+      $upload_params['ACL'] = 'private';
+    }
+    elseif (file_uri_scheme($this->uri) != 'private') {
       $upload_params['ACL'] = 'public-read';
     }
     // Set the Cache-Control header, if the user specified one.
