@@ -61,7 +61,7 @@ function s3fs_settings() {
   );
 
   $form['aws_credentials']['s3fs_awssdk2_secret_key'] = array(
-    '#type'          => 'password',
+    '#type'          => 'textfield',
     '#title'         => t('Amazon Web Services Secret Key'),
     '#default_value' => _s3fs_get_setting('awssdk2_secret_key'),
   );
