@@ -432,10 +432,9 @@ class S3fsStreamWrapper implements DrupalStreamWrapperInterface {
     // If this file is versioned, append the version number as a GET arg to
     // ensure that browser caches will be bypassed upon version changes.
     $meta = $this->_read_cache($this->uri);
-    if (!empty($meta['version']) && $this->config['s3fs_use_versioning']) {
+    if (!empty($meta['version']) && (isset($this->config['use_versioning']) && $this->config['use_versioning'])) {
       $external_url = $this->_append_get_arg($external_url, $meta['version']);
     }
-
     // Torrents can only be created for publicly-accessible files:
     // https://forums.aws.amazon.com/thread.jspa?threadID=140949
     // So Forced SaveAs and Presigned URLs cannot be served as torrents.
