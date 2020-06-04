@@ -331,9 +331,10 @@ class S3fsStreamWrapper implements DrupalStreamWrapperInterface {
     $path_parts = explode('/', $s3_key);
     if ($path_parts[0] == 'styles' && substr($s3_key, -4) != '.css') {
       $metadata = $this->_s3fs_get_object($this->uri);
-      if (!$metadata || $metadata['filesize'] == 0 ) {
-        if ($metadata['filesize'] == 0) {
-          unlink($uri);
+      $is_zero_byte = !isset($metadata['filesize']) || $metadata['filesize'] == 0;
+      if (!$metadata || $is_zero_byte) {
+        if ($is_zero_byte) {
+          $this->unlink($this->uri);
         }
         // The style delivery path looks like: s3/files/styles/thumbnail/...
         // And $path_parts looks like array('styles', 'thumbnail', ...),
